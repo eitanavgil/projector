@@ -4,9 +4,16 @@ import {MediaListAction} from "kaltura-typescript-client/api/types/MediaListActi
 import {KalturaMediaEntry} from "kaltura-typescript-client/api/types/KalturaMediaEntry";
 import {KalturaMediaEntryFilter} from "kaltura-typescript-client/api/types/KalturaMediaEntryFilter";
 import ProjectorItem from "./ProjectorItem";
+import {KalturaFilterPager, KalturaFilterPagerArgs, KalturaPager} from "kaltura-typescript-client/api/types";
 
 export interface projectorProps {
     ks: string;
+}
+
+export interface gridItem {
+    entry: KalturaMediaEntry,
+    row: number,
+    col: number
 }
 
 const Projector: React.FC<projectorProps> = (props) => {
@@ -24,12 +31,16 @@ const Projector: React.FC<projectorProps> = (props) => {
         const filter: KalturaMediaEntryFilter = new KalturaMediaEntryFilter();
         filter.tagsLike = "projector";
 
-        const request = new MediaListAction({filter: filter, pager: undefined});
+        const pager: KalturaFilterPager = new KalturaFilterPager();
+        pager.pageIndex = 0;
+        pager.pageSize = 500;
+
+        const request = new MediaListAction({filter: filter, pager: pager});
         kalturaClient.request(request).then(
             response => {
                 if (response && response.objects.length) {
                     setLoading(false);
-                    setItems(response.objects)
+                    setItems(generateItems(shuffle(response.objects)))
                 }
             },
             error => {
@@ -43,11 +54,37 @@ const Projector: React.FC<projectorProps> = (props) => {
     }, []);
 
     const [loading, setLoading] = useState(true);
-    const [items, setItems] = useState<Array<KalturaMediaEntry>>([]);
+    const [items, setItems] = useState<Array<gridItem>>([]);
+
+    const maxLine = 14;
+
+    const shuffle = (a: any[]) => {
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    const generateItems = (items: KalturaMediaEntry[]) => {
+        const arr: any[] = [];
+        let i;
+        for (i = 0; i < items.length; i++) {
+            const it: gridItem = {
+                entry: items[i],
+                col: i % maxLine,
+                row: Math.floor(i / maxLine)
+            };
+            arr.push(it)
+        }
+
+        return arr;
+    };
+
 
     return <div className="projector">{loading && "Loading"}
         {items && items.length && items.map(item =>
-            <ProjectorItem key={item.id} data={item}></ProjectorItem>
+            <ProjectorItem key={item.entry.id} data={item.entry} c={item.col} r={item.row}></ProjectorItem>
         )}
     </div>;
 };

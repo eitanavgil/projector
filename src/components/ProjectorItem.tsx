@@ -3,17 +3,27 @@ import {KalturaMediaEntry} from "kaltura-typescript-client/api/types/KalturaMedi
 
 interface IProps {
     data: KalturaMediaEntry,
-    x?: number,
-    y?: number
+    r: number,
+    c: number
 }
 
 const ProjectorItem: React.FC<IProps> = (props) => {
-    // TO
+
+    const getPosition = (): any => {
+        let offset = 0;
+        if (props.r % 2 === 1) {
+            offset = 50;
+        }
+        return {left: 100 * props.c + offset, top: 86 * props.r}
+    };
+
     return (
-        <div className="hexagon hexagon2">
+        <div className="hexagon hexagon2" style={getPosition()}>
             <div className="hexagon-in1">
                 <div className="hexagon-in2"
-                     style={{backgroundImage: `url(${props.data.thumbnailUrl + "/width/240"})`}}></div>
+                     style={
+                         {backgroundImage: `url(${props.data.thumbnailUrl + "/width/240"})`}
+                     }></div>
             </div>
         </div>
     )

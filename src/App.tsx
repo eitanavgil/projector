@@ -16,8 +16,7 @@ const App: React.FC = () => {
             const user = userInput.value;
             const pwd = pwdInput.value;
             if (!user || !pwd) {
-                return;
-                // alert("Please make sure to fill both user and password");
+                alert("Please make sure to fill both user and password");
             }
             const adminUserArgs: AdminUserLoginActionArgs = {email: user, password: pwd, partnerId: 2612182};
             const adminUserAction: AdminUserLoginAction = new AdminUserLoginAction(adminUserArgs);
@@ -25,13 +24,17 @@ const App: React.FC = () => {
                 .then(response => {
                     if (response) {
                         api.setKs(response);
-                        setTimeout(() => setKs(response), 1000);
+                        setTimeout(() => setKs(response), 0);
                     }
                 }, err => {
                     console.error(err);
                 })
-
         };
+
+        // run once (componentDidMount)
+        useEffect(() => {
+            // handleSubmit();
+        }, []);
 
         return (
             <div className="App">
@@ -41,12 +44,14 @@ const App: React.FC = () => {
                         <div className="login-form">
                             <input type="text" placeholder="email" className="input" id="user" ref={(input) => {
                                 userInput = input;
-                            }} value={""} onChange={() => {
-                            }}/>
+                            }}
+                                   // value={""} onChange={() => {}}
+                            />
                             <input type="text" placeholder="password" className="input" id="password" ref={(input) => {
                                 pwdInput = input;
-                            }} value={""} onChange={() => {
-                            }}/>
+                            }}
+                                   // value={""} onChange={() => {}}
+                            />
                             <button className="submit" onClick={handleSubmit}>Submit</button>
                         </div>
                     }

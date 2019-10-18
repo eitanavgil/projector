@@ -25,6 +25,12 @@
   display: block;
 }
 
+.projector{
+  position: absolute;
+  top: 50px;
+  left: 50px;
+}
+
 
 
 .hexagon {
@@ -36,6 +42,8 @@
   -o-transform: rotate(120deg);
   transform: rotate(120deg);
   cursor: pointer;
+  position: absolute;
+
 }
 .hexagon-in1 {
   overflow: hidden;
