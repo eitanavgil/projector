@@ -11,12 +11,15 @@ export interface projectorProps {
 }
 
 export interface gridItem {
+    index: number,
     entry: KalturaMediaEntry,
     row: number,
     col: number
 }
 
 const Projector: React.FC<projectorProps> = (props) => {
+
+    const max = 100;
 
     useEffect(() => {
         const kalturaClient = new KalturaClient();
@@ -33,7 +36,7 @@ const Projector: React.FC<projectorProps> = (props) => {
 
         const pager: KalturaFilterPager = new KalturaFilterPager();
         pager.pageIndex = 0;
-        pager.pageSize = 500;
+        pager.pageSize = 30;
 
         const request = new MediaListAction({filter: filter, pager: pager});
         kalturaClient.request(request).then(
@@ -59,18 +62,20 @@ const Projector: React.FC<projectorProps> = (props) => {
     const maxLine = 14;
 
     const shuffle = (a: any[]) => {
-        for (let i = a.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a;
-    }
+        // for (let i = a.length - 1; i > 0; i--) {
+        //     const j = Math.floor(Math.random() * (i + 1));
+        //     [a[i], a[j]] = [a[j], a[i]];
+        // }
+        const newArr = new Array(20).concat(a);
+        return newArr
+    };
 
     const generateItems = (items: KalturaMediaEntry[]) => {
         const arr: any[] = [];
         let i;
         for (i = 0; i < items.length; i++) {
             const it: gridItem = {
+                index: i,
                 entry: items[i],
                 col: i % maxLine,
                 row: Math.floor(i / maxLine)
@@ -84,7 +89,7 @@ const Projector: React.FC<projectorProps> = (props) => {
 
     return <div className="projector">{loading && "Loading"}
         {items && items.length && items.map(item =>
-            <ProjectorItem key={item.entry.id} data={item.entry} c={item.col} r={item.row}></ProjectorItem>
+            <ProjectorItem key={item.index} data={item.entry} c={item.col} r={item.row}></ProjectorItem>
         )}
     </div>;
 };
