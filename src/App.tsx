@@ -46,16 +46,25 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
+
+
+            <div className="svg-wrapper">
+                <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+                    <rect className="shape1" height="100%" width="100%"/>
+                    <rect className="shape2" height="100%" width="100%"/>
+                </svg>
+            </div>
+
             <header className="App-header">
                 {
                     !ks &&
                     <div className="login-form">
-                        <input type="text" placeholder="email" defaultValue={"eitan.avgil@gmail.com"} className="input" id="user" ref={(input) => {
+                        <input type="text" placeholder="email" defaultValue={""} className="input" id="user" ref={(input) => {
                             userInput = input;
                         }}
                             // value={""} onChange={() => {}}
                         />
-                        <input type="text" placeholder="password" defaultValue={"passme"}  className="input" id="password" ref={(input) => {
+                        <input type="text" placeholder="password" defaultValue={""}  className="input" id="password" ref={(input) => {
                             pwdInput = input;
                         }}
                             // value={""} onChange={() => {}}

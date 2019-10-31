@@ -5,6 +5,7 @@ import {KalturaMediaEntry} from "kaltura-typescript-client/api/types/KalturaMedi
 import {KalturaMediaEntryFilter} from "kaltura-typescript-client/api/types/KalturaMediaEntryFilter";
 import ProjectorItem from "./ProjectorItem";
 import {KalturaFilterPager, KalturaFilterPagerArgs, KalturaPager} from "kaltura-typescript-client/api/types";
+import {placeholder} from "@babel/types";
 
 export interface projectorProps {
     ks: string;
@@ -17,11 +18,46 @@ export interface gridItem {
     col: number
 }
 
+const breakpointsData  = [
+    {amount:12,fillers:3},
+    {amount:24,fillers:6},
+    {amount:48,fillers:9},
+    {amount:96,fillers:12},
+    {amount:144,fillers:18},
+    {amount:204,fillers:25},
+    {amount:288,fillers:35},
+]
+
+
 const Projector: React.FC<projectorProps> = (props) => {
 
-    const max = 100;
+    const [breakpoint, setBreakpoint] = useState("");
+    const [placeholdersArr, setPlaceholdersArr] = useState();
+
+    const applyData = (data:any[]) =>{
+        // find the coresponding grid size
+        const gridParams = breakpointsData.find((i) => (data.length < i.amount - i.fillers) );
+        const gridItems = gridParams!.amount;
+        const fillers = gridParams!.fillers;
+        console.log(">>>> Grid is set to ",gridItems,"with",fillers,"fillers");
+        console.log(">>>> grid",placeholdersArr);
+
+
+
+        // setLoading(false);
+        // setItems(data)
+    };
 
     useEffect(() => {
+        const items = new Array();
+        // create fill array
+        for (let i = 0; i < 300; i++) {
+            items.push(i);
+        }
+        // shuffle
+        items.sort(() => Math.random() - 0.5);
+
+
         const kalturaClient = new KalturaClient();
 
         kalturaClient.setOptions({
@@ -36,14 +72,15 @@ const Projector: React.FC<projectorProps> = (props) => {
 
         const pager: KalturaFilterPager = new KalturaFilterPager();
         pager.pageIndex = 0;
-        pager.pageSize = 30;
-
+        pager.pageSize = 50;
+        console.log(">>>>1");
+        setPlaceholdersArr(items);
+        console.log(">>>>2");
         const request = new MediaListAction({filter: filter, pager: pager});
         kalturaClient.request(request).then(
             response => {
                 if (response && response.objects.length) {
-                    setLoading(false);
-                    setItems(generateItems(shuffle(response.objects)))
+                    applyData(response.objects)
                 }
             },
             error => {
@@ -60,15 +97,6 @@ const Projector: React.FC<projectorProps> = (props) => {
     const [items, setItems] = useState<Array<gridItem>>([]);
 
     const maxLine = 14;
-
-    const shuffle = (a: any[]) => {
-        // for (let i = a.length - 1; i > 0; i--) {
-        //     const j = Math.floor(Math.random() * (i + 1));
-        //     [a[i], a[j]] = [a[j], a[i]];
-        // }
-        const newArr = new Array(20).concat(a);
-        return newArr
-    };
 
     const generateItems = (items: KalturaMediaEntry[]) => {
         const arr: any[] = [];
