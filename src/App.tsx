@@ -48,12 +48,12 @@ const App: React.FC = () => {
         <div className="App">
 
 
-            <div className="svg-wrapper">
-                <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
-                    <rect className="shape1" height="100%" width="100%"/>
-                    <rect className="shape2" height="100%" width="100%"/>
-                </svg>
-            </div>
+            {/*<div className="svg-wrapper">*/}
+                {/*<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">*/}
+                    {/*<rect className="shape1" height="100%" width="100%"/>*/}
+                    {/*<rect className="shape2" height="100%" width="100%"/>*/}
+                {/*</svg>*/}
+            {/*</div>*/}
 
             <header className="App-header">
                 {

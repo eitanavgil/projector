@@ -1,44 +1,30 @@
 import React, {useState, useEffect} from "react";
 import {KalturaMediaEntry} from "kaltura-typescript-client/api/types/KalturaMediaEntry";
 
-interface IProps {
-    data?: KalturaMediaEntry | null,
-    r: number,
-    c: number
+export interface ItemProps {
+    entryData?: any,
+    itemIndex: number,
 }
 
-const ProjectorItem: React.FC<IProps> = (props) => {
+const ProjectorItem: React.FC<ItemProps> = (props) => {
+    return (
+        <div className={"image-container flex-item"}>
+            {
+                console.log(">>>> ", props.itemIndex)
+            }
+            <span className={"sp"}>{props.itemIndex}</span>
 
-        const getPosition = (): any => {
-            return {left: 100 * props.c, top: 86 * props.r}
-        };
-
-        return (
-            <div className={"image-container"}>
-                {props.data &&
+            {
+                props.entryData && props.entryData.data &&
                 <img className="projector-item"
-                     src={props.data!.thumbnailUrl + "/width/200/height/200/nearest_aspect_ratio/1"}
-                >
-                </img>}
+                     src={props.entryData.data.thumbnailUrl + "/width/80/height/80/nearest_aspect_ratio/1"}
+                ></img>
+            }
 
-            </div>
-// <div className="hexagon hexagon2" style={getPosition()}>
-//     <div className="hexagon-in1">
-// <img className="hexagon-in2"
-//  HERE !
-//     </div>
-// </div>
-        )
-    }
-;
+                </div>
+                )
+            }
+            ;
 
-export default ProjectorItem;
-/**
- <div>
- <img src={props.data.thumbnailUrl+"/width/100"}/>
- </div>
+            export default ProjectorItem;
 
- background-image: url(http://placekitten.com/240/240);
-
-
- */
