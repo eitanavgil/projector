@@ -7,24 +7,25 @@ export interface ItemProps {
 }
 
 const ProjectorItem: React.FC<ItemProps> = (props) => {
-    return (
-        <div className={"image-container flex-item"}>
-            {
-                console.log(">>>> ", props.itemIndex)
-            }
-            <span className={"sp"}>{props.itemIndex}</span>
+        return (
+            <div className={"image-container flex-item"}>
+                <span className={"sp"}>{props.itemIndex}</span>
 
-            {
-                props.entryData && props.entryData.data &&
-                <img className="projector-item"
-                     src={props.entryData.data.thumbnailUrl + "/width/80/height/80/nearest_aspect_ratio/1"}
-                ></img>
-            }
+                {
+                    props.entryData && props.entryData.data &&
+                    <img className="projector-item"
+                         src={props.entryData.data.thumbnailUrl + "/width/80/height/80/nearest_aspect_ratio/1"}
+                    ></img>
+                }
 
-                </div>
-                )
-            }
-            ;
+                {/*{*/}
+                    {/*props.entryData.data &&*/}
+                    {/*console.log(">>>> ", props.entryData.data.id)*/}
+                {/*}*/}
+            </div>
+        )
+    }
+;
 
-            export default ProjectorItem;
+export default ProjectorItem;
 

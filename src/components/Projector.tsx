@@ -5,7 +5,9 @@ import {KalturaMediaEntry} from "kaltura-typescript-client/api/types/KalturaMedi
 import {KalturaMediaEntryFilter} from "kaltura-typescript-client/api/types/KalturaMediaEntryFilter";
 import ProjectorItem, {ItemProps} from "./ProjectorItem";
 import {KalturaFilterPager, KalturaFilterPagerArgs, KalturaPager} from "kaltura-typescript-client/api/types";
-import {placeholder} from "@babel/types";
+import remove from 'lodash/remove';
+import isEqual from 'lodash/isEqual';
+import without from 'lodash/without';
 
 export interface projectorProps {
     ks: string;
@@ -19,41 +21,58 @@ export interface gridItem {
 
 const Projector: React.FC<projectorProps> = (props) => {
 
+    const maxItems = 30;
+    const refreshInterval = 20;
+
+    const [loading, setLoading] = useState(true);
     const [placeholdersArr, setPlaceholdersArr] = useState();
     const [data, setData] = useState<KalturaMediaEntry[]>();
+    const [items, setItems] = useState<Array<gridItem>>([]);
 
+
+    // apply data
     useEffect(() => {
-        if (!placeholdersArr) {
+
+        if (!placeholdersArr || !data || !data.length || !placeholdersArr.length) {
             return
         }
+        let clonedArray = [...placeholdersArr];
+        const existingItemsIds = clonedArray.filter((item: any) => item.data).map(itemProp => itemProp.data.id);
+        const receivedItemsIds = data.map((entry: any) => entry.id);
 
-        // find the coresponding grid size
-        // let gridParams = breakpointsData.find((i) => (entryData.length < i.amount - i.fillers) );
-        let gridParams = {amount: 48, fillers: 3};
-        const gridItems = gridParams!.amount;
-        const fillers = gridParams!.fillers;
 
-        // console.log(">>>> Grid is set to ", gridItems, "with", fillers, "fillers");
+        const removeList = without(existingItemsIds, ...receivedItemsIds);
+        const addList = without(receivedItemsIds, ...existingItemsIds);
 
-        // at this point we should have a shuffled array with or without entries
-        // fill the existing shuffled array with the received items by their order
-        data!.forEach((entry: KalturaMediaEntry, index: number) => {
-            const itemInShuffeledArr = placeholdersArr.find((i: ItemProps) => i.itemIndex === index);
-            itemInShuffeledArr.data = entry
-
+        // remove items from current
+        clonedArray.map(itm => {
+            if (itm.data && removeList.some(it => it === itm.data.id)) {
+                itm.data = null
+            }
+            return itm
         });
+
+        const emptyItems = clonedArray.filter(itm => !itm.data);
+        addList.forEach((entryIdToAdd, index) => {
+            emptyItems[index].data = data.find(it => it.id === entryIdToAdd)
+        });
+
+        clonedArray.sort((a, b) => a.itemIndex - b.itemIndex);
+
         setLoading(false);
-        setItems(placeholdersArr);
+        setItems(clonedArray);
 
-        setTimeout(fetchEntries, 5000)
+        setTimeout(() => {
+            fetchEntries();
+        }, refreshInterval * 1000);
 
-    }, [data]);
+    }, [data]); // only react to data changes
 
     // generate a random array and save to state
     useEffect(() => {
         const items = new Array();
         // create fill array
-        for (let i = 0; i < 49; i++) {
+        for (let i = 0; i < maxItems; i++) {
             items.push({itemIndex: i});
         }
         // shuffle
@@ -72,12 +91,11 @@ const Projector: React.FC<projectorProps> = (props) => {
             ks: props.ks
         });
         const filter: KalturaMediaEntryFilter = new KalturaMediaEntryFilter();
-        filter.tagsLike = "projector";
-        filter.orderBy = "+createdAt";
+        // filter.tagsLike = "ppp";
+        filter.orderBy = "-createdAt";
 
         const pager: KalturaFilterPager = new KalturaFilterPager();
-        pager.pageIndex = 0;
-        pager.pageSize = 48;
+        pager.pageSize = maxItems;
         const request = new MediaListAction({filter: filter, pager: pager});
         kalturaClient.request(request).then(
             response => {
@@ -98,8 +116,6 @@ const Projector: React.FC<projectorProps> = (props) => {
     // first time fetch entries
     useEffect(fetchEntries, []);
 
-    const [loading, setLoading] = useState(true);
-    const [items, setItems] = useState<Array<gridItem>>([]);
 
     return <div className="projector flex-container">
         {loading && "Loading"}
