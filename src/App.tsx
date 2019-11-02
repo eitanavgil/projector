@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import data from "./stab";
+import back from "./back.png";
 import "./App.css";
 import Projector from "../src/components/Projector";
 import Api from "./utils/Api";
@@ -46,7 +46,7 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-
+            <img className={"back"} src={"back"}></img>
 
             {/*<div className="svg-wrapper">*/}
                 {/*<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">*/}
@@ -59,6 +59,7 @@ const App: React.FC = () => {
                 {
                     !ks &&
                     <div className="login-form">
+
                         <input type="text" placeholder="email" defaultValue={""} className="input" id="user" ref={(input) => {
                             userInput = input;
                         }}

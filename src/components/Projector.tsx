@@ -5,15 +5,13 @@ import {KalturaMediaEntry} from "kaltura-typescript-client/api/types/KalturaMedi
 import {KalturaMediaEntryFilter} from "kaltura-typescript-client/api/types/KalturaMediaEntryFilter";
 import ProjectorItem, {ItemProps} from "./ProjectorItem";
 import {KalturaFilterPager, KalturaFilterPagerArgs, KalturaPager} from "kaltura-typescript-client/api/types";
-import remove from 'lodash/remove';
-import isEqual from 'lodash/isEqual';
 import without from 'lodash/without';
 
 export interface projectorProps {
     ks: string;
 }
 
-export interface gridItem {
+  export interface gridItem {
     index: number,
     entry?: KalturaMediaEntry,
 }
@@ -21,13 +19,15 @@ export interface gridItem {
 
 const Projector: React.FC<projectorProps> = (props) => {
 
-    const maxItems = 30;
+    const maxItems = 48;
     const refreshInterval = 20;
 
     const [loading, setLoading] = useState(true);
     const [placeholdersArr, setPlaceholdersArr] = useState();
     const [data, setData] = useState<KalturaMediaEntry[]>();
     const [items, setItems] = useState<Array<gridItem>>([]);
+
+    let [count, setCount] = useState(0);
 
 
     // apply data
