@@ -3,15 +3,14 @@ import {KalturaClient, KalturaClientException, KalturaAPIException} from "kaltur
 import {MediaListAction} from "kaltura-typescript-client/api/types/MediaListAction";
 import {KalturaMediaEntry} from "kaltura-typescript-client/api/types/KalturaMediaEntry";
 import {KalturaMediaEntryFilter} from "kaltura-typescript-client/api/types/KalturaMediaEntryFilter";
-import ProjectorItem, {ItemProps} from "./ProjectorItem";
-import {KalturaFilterPager, KalturaFilterPagerArgs, KalturaPager} from "kaltura-typescript-client/api/types";
+import ProjectorItem from "./ProjectorItem";
+import {KalturaFilterPager} from "kaltura-typescript-client/api/types";
 import without from 'lodash/without';
 
 export interface projectorProps {
-    ks: string;
-}
+    ks: string}
 
-  export interface gridItem {
+export interface gridItem {
     index: number,
     entry?: KalturaMediaEntry,
 }
@@ -21,14 +20,10 @@ const Projector: React.FC<projectorProps> = (props) => {
 
     const maxItems = 48;
     const refreshInterval = 20;
-
     const [loading, setLoading] = useState(true);
     const [placeholdersArr, setPlaceholdersArr] = useState();
     const [data, setData] = useState<KalturaMediaEntry[]>();
     const [items, setItems] = useState<Array<gridItem>>([]);
-
-    let [count, setCount] = useState(0);
-
 
     // apply data
     useEffect(() => {
@@ -117,11 +112,12 @@ const Projector: React.FC<projectorProps> = (props) => {
     useEffect(fetchEntries, []);
 
 
-    return <div className="projector flex-container">
+    return <div className={"projector flex-container s" + maxItems}>
         {loading && "Loading"}
         {items && items.length && items.map((item, index) =>
             <ProjectorItem key={index} entryData={item} itemIndex={index}></ProjectorItem>
         )}
+        <span className={"credits"}>@funwall 1.0 - Dana | Lior | Eitan</span>
     </div>;
 };
 

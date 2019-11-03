@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React,{useState, useEffect} from "react";
 
 export interface ItemProps {
     entryData?: any,
@@ -11,7 +11,7 @@ const ProjectorItem: React.FC<ItemProps> = (props) => {
                 {
                     props.entryData && props.entryData.data &&
                     <img className="projector-item"
-                         src={props.entryData.data.thumbnailUrl + "/width/80/height/80/nearest_aspect_ratio/1"}
+                         src={props.entryData.data.thumbnailUrl + "/width/256/height/256/nearest_aspect_ratio/1"}
                     ></img>
                 }
 

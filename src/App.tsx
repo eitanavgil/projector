@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import back from "./back.png";
 import "./App.css";
 import Projector from "../src/components/Projector";
 import Api from "./utils/Api";
@@ -15,7 +14,6 @@ const App: React.FC = () => {
     const dev = true;
 
     const handleSubmit = () => {
-        // api.setKs("djJ8MjYxMjE4MnyR0wG55fs1fSdohQymXrUgFKKRo_q0rN04-gF6rxbRt8EGGaoTjP3mI0wT7qYaC6bkLLuNZUKEGMu4yOnTb04IKRFSB59oE6wIokg26zKH_w==");
         // return;
         const user = userInput.value;
         const pwd = pwdInput.value;
@@ -46,15 +44,6 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-            <img className={"back"} src={"back"}></img>
-
-            {/*<div className="svg-wrapper">*/}
-                {/*<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">*/}
-                    {/*<rect className="shape1" height="100%" width="100%"/>*/}
-                    {/*<rect className="shape2" height="100%" width="100%"/>*/}
-                {/*</svg>*/}
-            {/*</div>*/}
-
             <header className="App-header">
                 {
                     !ks &&
