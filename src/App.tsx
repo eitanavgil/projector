@@ -65,18 +65,15 @@ const App: React.FC = () => {
                 {
                     !ks &&
                     <div className="login-form">
-
-                        <input type="text" placeholder="email" defaultValue={""} className="input"
+                        <input type="text" placeholder="email" defaultValue={"eitan.avgil@.com"} className="input"
                                id="user" ref={(input) => {
                             userInput = input;
                         }}
-                            // value={""} onChange={() => {}}
                         />
                         <input type="text" placeholder="password" defaultValue={""} className="input"
                                id="password" ref={(input) => {
                             pwdInput = input;
                         }}
-                            // value={""} onChange={() => {}}
                         />
                         <button className="submit" onClick={handleSubmit}>Submit</button>
                     </div>

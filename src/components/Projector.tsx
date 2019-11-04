@@ -13,6 +13,8 @@ export interface projectorProps {
 
 export interface gridItem {
     isNew?: boolean,
+    blink1?: boolean,
+    blink2?: boolean,
     placeHolder?: boolean,
     index: number,
     entry?: KalturaMediaEntry,
@@ -22,7 +24,7 @@ export interface gridItem {
 const Projector: React.FC<projectorProps> = (props) => {
 
     const maxItems = 48;
-    const refreshInterval = 10;
+    const refreshInterval = 100;
     const [loading, setLoading] = useState(true);
     const [placeholdersArr, setPlaceholdersArr] = useState();
     const [data, setData] = useState<KalturaMediaEntry[]>();
@@ -73,13 +75,19 @@ const Projector: React.FC<projectorProps> = (props) => {
         });
         unfilledItems.sort(() => Math.random() - 0.5);
         if (unfilledItems[0]) {
+            unfilledItems[0].blink1=true;
             unfilledItems[0].placeHolder = true;
         }
         if (unfilledItems[1]) {
+            unfilledItems[1].blink2=true;
             unfilledItems[1].placeHolder = true;
         }
         if (unfilledItems[2]) {
             unfilledItems[2].placeHolder = true;
+        }
+        if (unfilledItems[3]) {
+            unfilledItems[0].blink1=true;
+            unfilledItems[3].placeHolder = true;
         }
         //console.log(">>>> unfilledItems", unfilledItems);
         setItems(clonedArray);
@@ -142,6 +150,8 @@ const Projector: React.FC<projectorProps> = (props) => {
         {loading && "Loading..."}
         {items && items.length && items.map((item, index) =>
             <ProjectorItem key={index}
+                           blink1={item.blink1}
+                           blink2={item.blink2}
                            entryData={item}
                            itemIndex={index}
                            placeHolder={item.placeHolder}

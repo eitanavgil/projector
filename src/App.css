@@ -127,7 +127,35 @@
         opacity: 0;
     }
 }
+@keyframes flickerAnimation1 {
+    0% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0.3;
+    }
+}
+@keyframes flickerAnimation2 {
+    0% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.05;
+    }
+    100% {
+        opacity: 0.4;
+    }
+}
 
 .animate-flicker {
-    animation: flickerAnimation 3s infinite;
+    animation: flickerAnimation 4s infinite;
+}
+.blink1 .animate-flicker {
+    animation: flickerAnimation1 3s infinite;
+}
+.blink2 .animate-flicker {
+    animation: flickerAnimation2 5s infinite;
 }
