@@ -37,10 +37,12 @@
 
 .new-item .new-item-holder {
     display: block;
-    top: -134px;
+    top: -134.6px;
     position: relative;
 }
 
+
+.place-holder,
 .new-item-holder,
 .item-content {
     max-width: 128px;
@@ -119,7 +121,7 @@
         opacity: 0;
     }
     50% {
-        opacity: 1;
+        opacity: 0.3;
     }
     100% {
         opacity: 0;

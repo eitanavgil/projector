@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 // import glowbg from "./glowbg.png";
-// import glow from "./glowbg.png";
+import glow from "./triangleglow.png";
 import newPic from "./new.png";
 // import triangle from "./triangle.png";
 
@@ -16,7 +16,7 @@ const ProjectorItem: React.FC<ItemProps> = (props) => {
             <div className={props.entryData.isNew ? "flex-item new-item" : "flex-item"}>
                 <div className="item-content">
                     {props.placeHolder && <div className="placeHolder animate-flicker">
-                        Animation
+                        <img src={glow}  className="place-holder"></img>
                     </div>}
                     {props.entryData && props.entryData.data &&
 

@@ -22,7 +22,7 @@ export interface gridItem {
 const Projector: React.FC<projectorProps> = (props) => {
 
     const maxItems = 48;
-    const refreshInterval = 100;
+    const refreshInterval = 10;
     const [loading, setLoading] = useState(true);
     const [placeholdersArr, setPlaceholdersArr] = useState();
     const [data, setData] = useState<KalturaMediaEntry[]>();
@@ -39,8 +39,8 @@ const Projector: React.FC<projectorProps> = (props) => {
         const removeList = without(existingItemsIds, ...receivedItemsIds);
         const addList = without(receivedItemsIds, ...existingItemsIds);
         let firstLoad = false;
-        if (removeList.length === 0) {
-            firstLoad = false;
+        if (items.length === 0) {
+            firstLoad = true;
         }
 
         // remove items from current
@@ -48,7 +48,10 @@ const Projector: React.FC<projectorProps> = (props) => {
             if (itm.data && removeList.some(it => it === itm.data.id)) {
                 itm.data = null
             }
-            itm.isNew = false;
+            // if we had gotten new items - mark all as non-new
+            if(removeList.length > 0){
+                itm.isNew = false;
+            }
             return itm
         });
 
@@ -68,8 +71,6 @@ const Projector: React.FC<projectorProps> = (props) => {
             item.placeHolder = null;
             return !item.data;
         });
-
-
         unfilledItems.sort(() => Math.random() - 0.5);
         if (unfilledItems[0]) {
             unfilledItems[0].placeHolder = true;
