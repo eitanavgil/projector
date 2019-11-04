@@ -8,9 +8,11 @@ import {KalturaFilterPager} from "kaltura-typescript-client/api/types";
 import without from 'lodash/without';
 
 export interface projectorProps {
-    ks: string}
+    ks: string
+}
 
 export interface gridItem {
+    placeHolder?:boolean,
     index: number,
     entry?: KalturaMediaEntry,
 }
@@ -19,7 +21,7 @@ export interface gridItem {
 const Projector: React.FC<projectorProps> = (props) => {
 
     const maxItems = 48;
-    const refreshInterval = 20;
+    const refreshInterval = 12;
     const [loading, setLoading] = useState(true);
     const [placeholdersArr, setPlaceholdersArr] = useState();
     const [data, setData] = useState<KalturaMediaEntry[]>();
@@ -27,15 +29,12 @@ const Projector: React.FC<projectorProps> = (props) => {
 
     // apply data
     useEffect(() => {
-
         if (!placeholdersArr || !data || !data.length || !placeholdersArr.length) {
             return
         }
         let clonedArray = [...placeholdersArr];
         const existingItemsIds = clonedArray.filter((item: any) => item.data).map(itemProp => itemProp.data.id);
         const receivedItemsIds = data.map((entry: any) => entry.id);
-
-
         const removeList = without(existingItemsIds, ...receivedItemsIds);
         const addList = without(receivedItemsIds, ...existingItemsIds);
 
@@ -55,6 +54,26 @@ const Projector: React.FC<projectorProps> = (props) => {
         clonedArray.sort((a, b) => a.itemIndex - b.itemIndex);
 
         setLoading(false);
+        // random fill 3 of the empty item
+        let unfilledItems = clonedArray.filter(item => {
+            item.placeHolder = null;
+            return !item.data;
+        });
+
+
+        unfilledItems.sort(() => Math.random() - 0.5);
+        if(unfilledItems[0]){
+            unfilledItems[0].placeHolder = true;
+        }
+        if(unfilledItems[1]){
+            unfilledItems[1].placeHolder = true;
+        }
+        if(unfilledItems[2]){
+            unfilledItems[2].placeHolder = true;
+        }
+        //console.log(">>>> unfilledItems", unfilledItems);
+
+
         setItems(clonedArray);
 
         setTimeout(() => {
@@ -106,16 +125,16 @@ const Projector: React.FC<projectorProps> = (props) => {
                 }
             }
         );
-    }
+    };
 
     // first time fetch entries
     useEffect(fetchEntries, []);
 
 
     return <div className={"projector flex-container s" + maxItems}>
-        {loading && "Loading"}
+        {loading && "Loading..."}
         {items && items.length && items.map((item, index) =>
-            <ProjectorItem key={index} entryData={item} itemIndex={index}></ProjectorItem>
+            <ProjectorItem key={index} entryData={item} itemIndex={index} placeHolder={item.placeHolder} ></ProjectorItem>
         )}
         <span className={"credits"}>@funwall 1.0 - Dana | Lior | Eitan</span>
     </div>;

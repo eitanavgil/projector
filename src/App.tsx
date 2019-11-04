@@ -7,12 +7,28 @@ import {AdminUserLoginAction, AdminUserLoginActionArgs} from "kaltura-typescript
 const App: React.FC = () => {
 
     const [ks, setKs] = useState("");
+    const [fullscreen, setFullscreen] = useState(false);
     let api: Api = new Api();
     let userInput: any;
     let pwdInput: any;
+    let headerRef: any;
 
     const dev = true;
 
+    const handleFullscreen = (type: number) => {
+        let elem = headerRef;
+        if (!elem) {
+            return
+        }
+        if (!document.fullscreenElement) {
+            elem.requestFullscreen().catch((err: any) => {
+                alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+        setFullscreen(true);
+    };
     const handleSubmit = () => {
         // return;
         const user = userInput.value;
@@ -26,7 +42,6 @@ const App: React.FC = () => {
         api!.client.request(adminUserAction)
             .then(response => {
                 if (response) {
-
 
 
                     setTimeout(() => setKs(response), 0);
@@ -44,17 +59,21 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-            <header className="App-header">
+            <header className="App-header" ref={(projector: any) => {
+                headerRef = projector;
+            }}>
                 {
                     !ks &&
                     <div className="login-form">
 
-                        <input type="text" placeholder="email" defaultValue={""} className="input" id="user" ref={(input) => {
+                        <input type="text" placeholder="email" defaultValue={""} className="input"
+                               id="user" ref={(input) => {
                             userInput = input;
                         }}
                             // value={""} onChange={() => {}}
                         />
-                        <input type="text" placeholder="password" defaultValue={""}  className="input" id="password" ref={(input) => {
+                        <input type="text" placeholder="password" defaultValue={""} className="input"
+                               id="password" ref={(input) => {
                             pwdInput = input;
                         }}
                             // value={""} onChange={() => {}}
@@ -64,7 +83,13 @@ const App: React.FC = () => {
                 }
                 {
                     ks &&
-                    <Projector ks={ks}></Projector>
+                    <Projector ks={ks}
+                    ></Projector>
+
+                }
+                {
+                    !fullscreen &&
+                    <button className="fullscreen" onClick={() => handleFullscreen(1)}>Fullscreen1</button>
                 }
             </header>
         </div>
