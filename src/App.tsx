@@ -83,13 +83,11 @@ const App: React.FC = () => {
                 }
                 {
                     ks &&
-                    <Projector ks={ks}
-                    ></Projector>
-
+                    <Projector ks={ks}></Projector>
                 }
                 {
                     !fullscreen &&
-                    <button className="fullscreen" onClick={() => handleFullscreen(1)}>Fullscreen1</button>
+                    <button className="fullscreen" onClick={() => handleFullscreen(1)}>Fullscreen</button>
                 }
             </header>
         </div>

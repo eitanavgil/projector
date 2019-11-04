@@ -17,14 +17,14 @@
 .input, .submit {
     display: block;
 }
-.projector{
+
+.projector {
     background-image: url("./back.jpg");
     max-width: 1024px;
     max-height: 768px;
-    /*min-width: 1024px;*/
-    /*min-height: 728px;*/
+    height: 768px;
+    width: 1024px;
 }
-
 
 
 .flex-container {
@@ -35,6 +35,22 @@
     flex-wrap: wrap;
 }
 
+.new-item .new-item-holder {
+    display: block;
+    top: -134px;
+    position: relative;
+}
+
+.new-item-holder,
+.item-content {
+    max-width: 128px;
+    max-height: 128px;
+}
+
+.new-item-holder {
+    display: none;
+}
+
 .projector-item {
     width: 100%;
 }
@@ -42,6 +58,7 @@
 .s48 .projector-item {
     max-width: 128px
 }
+
 .s48 .flex-item {
     min-width: 12.5%;
 }
@@ -49,24 +66,24 @@
 .s36 .projector-item {
     max-width: 60px
 }
+
 .s36 .flex-item {
     min-width: 8.3333%;
 }
 
 .flex-item {
     flex-grow: 1;
-    margin-bottom: -0.6vh;
 }
 
-.triangle{
+.triangle {
     max-width: 90px;
     max-height: 90px;
     position: absolute;
 }
 
-.credits{
+.credits {
     margin-top: -50px;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
     font-size: 12px;
     bottom: -30px;
     position: relative;
@@ -74,28 +91,39 @@
     padding-left: 4px;
 }
 
-.hidden-flex-item {
-    content: "";
-    flex: 1 0 200px;
-    padding: 5px;
-    margin-top: 10px;
-    margin-right: 5px;
-    visibility: hidden;
+.placeHolder {
+    font-size: 18px;
+    max-width: 128px;
+    max-height: 128px;
+    height: 128px;
+    width: 128px;
+}
+
+.new-item img {
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .sp {
     font-size: 9px;
     color: black;
 }
-.fullscreen{
+
+.fullscreen {
     display: block;
     position: absolute;
+    top: 0
 }
 
 @keyframes flickerAnimation {
-    0%   { opacity:0; }
-    50%  { opacity:1; }
-    100% { opacity:0; }
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .animate-flicker {
