@@ -15,6 +15,7 @@ export interface gridItem {
     isNew?: boolean,
     blink1?: boolean,
     blink2?: boolean,
+    blink3?: boolean,
     placeHolder?: boolean,
     index: number,
     entry?: KalturaMediaEntry,
@@ -24,7 +25,7 @@ export interface gridItem {
 const Projector: React.FC<projectorProps> = (props) => {
 
     const maxItems = 48;
-    const refreshInterval = 100;
+    const refreshInterval = 10;
     const [loading, setLoading] = useState(true);
     const [placeholdersArr, setPlaceholdersArr] = useState();
     const [data, setData] = useState<KalturaMediaEntry[]>();
@@ -68,27 +69,32 @@ const Projector: React.FC<projectorProps> = (props) => {
         clonedArray.sort((a, b) => a.itemIndex - b.itemIndex);
 
         setLoading(false);
-        // random fill 3 of the empty item
-        let unfilledItems = clonedArray.filter(item => {
-            item.placeHolder = null;
-            return !item.data;
-        });
-        unfilledItems.sort(() => Math.random() - 0.5);
-        if (unfilledItems[0]) {
-            unfilledItems[0].blink1=true;
-            unfilledItems[0].placeHolder = true;
+
+
+        // random fill 3 of the empty item - only if we received new items
+        if(addList.length){
+            let unfilledItems = clonedArray.filter(item => {
+                item.placeHolder = null;
+                return !item.data;
+            });
+            unfilledItems.sort(() => Math.random() - 0.5);
+            if (unfilledItems[0]) {
+                unfilledItems[0].blink1 = true;
+                unfilledItems[0].placeHolder = true;
+            }
+            if (unfilledItems[1]) {
+                unfilledItems[1].blink2 = true;
+                unfilledItems[1].placeHolder = true;
+            }
+            if (unfilledItems[2]) {
+                unfilledItems[2].placeHolder = true;
+            }
+            if (unfilledItems[3]) {
+                unfilledItems[3].blink3 = true;
+                unfilledItems[3].placeHolder = true;
+            }
         }
-        if (unfilledItems[1]) {
-            unfilledItems[1].blink2=true;
-            unfilledItems[1].placeHolder = true;
-        }
-        if (unfilledItems[2]) {
-            unfilledItems[2].placeHolder = true;
-        }
-        if (unfilledItems[3]) {
-            unfilledItems[0].blink1=true;
-            unfilledItems[3].placeHolder = true;
-        }
+
         //console.log(">>>> unfilledItems", unfilledItems);
         setItems(clonedArray);
 
@@ -152,6 +158,7 @@ const Projector: React.FC<projectorProps> = (props) => {
             <ProjectorItem key={index}
                            blink1={item.blink1}
                            blink2={item.blink2}
+                           blink3={item.blink3}
                            entryData={item}
                            itemIndex={index}
                            placeHolder={item.placeHolder}

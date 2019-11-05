@@ -65,7 +65,7 @@ const App: React.FC = () => {
                 {
                     !ks &&
                     <div className="login-form">
-                        <input type="text" placeholder="email" defaultValue={"eitan.avgil@.com"} className="input"
+                        <input type="text" placeholder="email" defaultValue={""} className="input"
                                id="user" ref={(input) => {
                             userInput = input;
                         }}

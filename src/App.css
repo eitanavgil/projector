@@ -26,7 +26,6 @@
     width: 1024px;
 }
 
-
 .flex-container {
     padding: 0;
     margin: 0;
@@ -36,11 +35,10 @@
 }
 
 .new-item .new-item-holder {
-    display: block;
     top: -134.6px;
     position: relative;
+    animation: 3s fadeIn;
 }
-
 
 .place-holder,
 .new-item-holder,
@@ -50,7 +48,7 @@
 }
 
 .new-item-holder {
-    display: none;
+    opacity: 0;
 }
 
 .projector-item {
@@ -121,41 +119,36 @@
         opacity: 0;
     }
     50% {
-        opacity: 0.3;
+        opacity: 0.4;
     }
     100% {
         opacity: 0;
     }
 }
-@keyframes flickerAnimation1 {
-    0% {
-        opacity: 0.3;
-    }
+
+
+@keyframes fadeIn {
     50% {
         opacity: 0;
     }
     100% {
-        opacity: 0.3;
-    }
-}
-@keyframes flickerAnimation2 {
-    0% {
-        opacity: 0.4;
-    }
-    50% {
-        opacity: 0.05;
-    }
-    100% {
-        opacity: 0.4;
+        opacity: 1;
     }
 }
 
 .animate-flicker {
-    animation: flickerAnimation 4s infinite;
+    animation: flickerAnimation 9s infinite;
+    animation-delay: 2s;
 }
+
 .blink1 .animate-flicker {
-    animation: flickerAnimation1 3s infinite;
+    animation: flickerAnimation 7.5s infinite;
 }
+
 .blink2 .animate-flicker {
-    animation: flickerAnimation2 5s infinite;
+    animation: flickerAnimation 6s infinite;
+}
+
+.blink3 .animate-flicker {
+    animation: flickerAnimation 6s infinite;
 }
