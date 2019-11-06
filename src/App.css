@@ -35,9 +35,11 @@
 }
 
 .new-item .new-item-holder {
-    top: -134.6px;
+    opacity: 1;
+    top: -134px;
     position: relative;
-    animation: 3s fadeIn;
+    animation: 3s fadeIn infinite;
+    animation-delay: 4s;
 }
 
 .place-holder,
@@ -128,21 +130,23 @@
 
 
 @keyframes fadeIn {
+    0% {
+        opacity: 0.2;
+    }
     50% {
-        opacity: 0;
+        opacity: 0.8
     }
     100% {
-        opacity: 1;
+        opacity: 0.2;
     }
 }
 
 .animate-flicker {
-    animation: flickerAnimation 9s infinite;
-    animation-delay: 2s;
+    animation: flickerAnimation 5s infinite;
 }
 
 .blink1 .animate-flicker {
-    animation: flickerAnimation 7.5s infinite;
+    animation: flickerAnimation 4s infinite;
 }
 
 .blink2 .animate-flicker {
@@ -150,5 +154,5 @@
 }
 
 .blink3 .animate-flicker {
-    animation: flickerAnimation 6s infinite;
+    animation: flickerAnimation 7s infinite;
 }

@@ -65,12 +65,12 @@ const App: React.FC = () => {
                 {
                     !ks &&
                     <div className="login-form">
-                        <input type="text" placeholder="email" defaultValue={""} className="input"
+                        <input type="text" placeholder="email" defaultValue={"eitan.avgil@gmail.com"} className="input"
                                id="user" ref={(input) => {
                             userInput = input;
                         }}
                         />
-                        <input type="text" placeholder="password" defaultValue={""} className="input"
+                        <input type="text" placeholder="password" defaultValue={"passme10"} className="input"
                                id="password" ref={(input) => {
                             pwdInput = input;
                         }}

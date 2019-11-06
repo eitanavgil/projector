@@ -19,9 +19,9 @@ const ProjectorItem: React.FC<ItemProps> = (props) => {
             //
             <div className={props.entryData.isNew ? "flex-item new-item" : "flex-item"}>
                 <div
-                    className={props.blink1 ? "item-content blink1 " : "item-content "
-                    + props.blink2 ? "item-content blink2 " : "item-content "
-                    + props.blink3 ? "item-content blink3 " : "item-content "
+                    className={(props.blink1 ? "item-content blink1 " : "item-content ")
+                    + (props.blink2 ? "item-content blink2 " : "item-content ")
+                    + (props.blink3 ? "item-content blink3 " : "item-content ")
                     }>
                     {props.placeHolder && <div className="placeHolder animate-flicker">
                         <img src={glow} className="place-holder"></img>
