@@ -24,7 +24,8 @@ export interface gridItem {
 
 const Projector: React.FC<projectorProps> = (props) => {
 
-    const maxItems = 48;
+    const maxItems = 44;
+    const placeHolders = 4;
     const refreshInterval = 10;
     const [loading, setLoading] = useState(true);
     const [placeholdersArr, setPlaceholdersArr] = useState();
@@ -108,7 +109,7 @@ const Projector: React.FC<projectorProps> = (props) => {
     useEffect(() => {
         const items = new Array();
         // create fill array
-        for (let i = 0; i < maxItems; i++) {
+        for (let i = 0; i < maxItems + placeHolders; i++) {
             items.push({itemIndex: i});
         }
         // shuffle
@@ -152,7 +153,7 @@ const Projector: React.FC<projectorProps> = (props) => {
     // first time fetch entries
     useEffect(fetchEntries, []);
 
-    return <div className={"projector flex-container s" + maxItems}>
+    return <div className={"projector flex-container s" + maxItems+placeHolders}>
         {loading && "Loading..."}
         {items && items.length && items.map((item, index) =>
             <ProjectorItem key={index}
