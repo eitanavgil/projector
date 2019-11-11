@@ -24,8 +24,8 @@ export interface gridItem {
 
 const Projector: React.FC<projectorProps> = (props) => {
 
-    const maxItems = 44;
-    const placeHolders = 4;
+    const maxItems = 48;
+    const placeHolders = 0;
     const refreshInterval = 10;
     const [loading, setLoading] = useState(true);
     const [placeholdersArr, setPlaceholdersArr] = useState();
@@ -72,29 +72,29 @@ const Projector: React.FC<projectorProps> = (props) => {
         setLoading(false);
 
 
-        // random fill 3 of the empty item - only if we received new items
-        if(addList.length){
-            let unfilledItems = clonedArray.filter(item => {
-                item.placeHolder = null;
-                return !item.data;
-            });
-            unfilledItems.sort(() => Math.random() - 0.5);
-            if (unfilledItems[0]) {
-                unfilledItems[0].blink1 = true;
-                unfilledItems[0].placeHolder = true;
-            }
-            if (unfilledItems[1]) {
-                unfilledItems[1].blink2 = true;
-                unfilledItems[1].placeHolder = true;
-            }
-            if (unfilledItems[2]) {
-                unfilledItems[2].placeHolder = true;
-            }
-            if (unfilledItems[3]) {
-                unfilledItems[3].blink3 = true;
-                unfilledItems[3].placeHolder = true;
-            }
-        }
+        // // random fill 3 of the empty item - only if we received new items
+        // if(addList.length){
+        //     let unfilledItems = clonedArray.filter(item => {
+        //         item.placeHolder = null;
+        //         return !item.data;
+        //     });
+        //     unfilledItems.sort(() => Math.random() - 0.5);
+        //     if (unfilledItems[0]) {
+        //         unfilledItems[0].blink1 = true;
+        //         unfilledItems[0].placeHolder = true;
+        //     }
+        //     if (unfilledItems[1]) {
+        //         unfilledItems[1].blink2 = true;
+        //         unfilledItems[1].placeHolder = true;
+        //     }
+        //     if (unfilledItems[2]) {
+        //         unfilledItems[2].placeHolder = true;
+        //     }
+        //     if (unfilledItems[3]) {
+        //         unfilledItems[3].blink3 = true;
+        //         unfilledItems[3].placeHolder = true;
+        //     }
+        // }
 
         //console.log(">>>> unfilledItems", unfilledItems);
         setItems(clonedArray);
