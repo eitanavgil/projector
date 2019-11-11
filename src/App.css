@@ -13,6 +13,10 @@
   color: white;
 }
 
+.login-form{
+  visibility: hidden;
+}
+
 .input,
 .submit {
   display: block;
@@ -35,7 +39,7 @@
 }
 
 .new-item .projector-item {
-  animation: 3s fadeIn1 infinite;
+  animation: 2.5s fadeIn1 infinite;
 }
 
 .place-holder,
@@ -114,13 +118,13 @@
 
 @keyframes flickerAnimation {
   0% {
-    opacity: 0;
+    opacity: 0.2;
   }
   50% {
-    opacity: 0.4;
+    opacity: 1;
   }
   100% {
-    opacity: 0;
+    opacity: 0.2;
   }
 }
 
